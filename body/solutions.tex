@@ -1,0 +1,26 @@
+\begin{theorem}
+
+Soit $f$ une fonction réelle $\alpha$-fortement convexe et $L$-lipschitzienne sur
+$E$. Soit $\xopt:= \argmin_{x\in E} f(x)$. On a le résultat suivant:
+\begin{equation}
+f(\xhat)-f(\xopt) \leq \frac{2 L^2}{\alpha T}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Pour $t=1$ à $T$, introduisons le pas:
+\begin{equation}
+  \mu_t := \frac{2}{\alpha t}
+\end{equation}
+En utilisant l'identité classique $2\ps{x}{y} = \norme{x+y}^2-\norme{x}^2-\norme{y}^2$, on a pour $t=0$ à $T-1$:
+\begin{align*}
+f(\xhat)-f(\xopt) &\leq f(x_t)-\prt{f(x_t) + \transpose{u_t}\prt{\xopt-x_t}
++ \frac{\alpha}{2} \norme{\xopt-x_t}^2}\\
+&= \transpose{u_t}\prt{x_t-\xopt}
+- \frac{\alpha}{2} \norme{\xopt-x_t}^2\\
+&= \frac{\step}{\step} \cdot \transpose{u_t}\prt{x_t-\xopt}
+- \frac{\alpha}{2} \norme{\xopt-x_t}^2\\
+&= \frac{1}{2 \step }\prt{\norme{\step \cdot u_t+x_t-\xopt}^2-\norme{\step \cdot u_t}^2-\norme{x_t-\xopt}^2
+}- \frac{\alpha}{2} \norme{\xopt-x_t}^2\\
+\end{align*}
+\end{proof}

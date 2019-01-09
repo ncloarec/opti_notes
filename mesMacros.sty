@@ -53,6 +53,20 @@
 \newcommand{\Jestim}{\hat{J}} %estimateur des indices des relevant variables
 \newcommand{\Jopt}{J^{\star}} %estimateur des indices des relevant variables
 \newcommand{\spm}{\raisebox{.2ex}{$\scriptstyle\pm$}} % plus or minus
+
+% ==================================================
+% Opti
+% ==================================================
+\newcommand{\fl}{\mathcal { F } _ { L }}
+\renewcommand{\A}{\mathcal{A}}
+\newcommand{\xopt}{x^{\star}}
+\newcommand{\xhat}{\hat{x}}
+\newcommand{\bigo}[1]{\mathcal{O}\prt{#1}}
+\newcommand{\xtilde}{\widetilde{x}}
+\newcommand{\Atilde}{\widetilde{A}}
+\newcommand{\step}{\mu_{t+1}}
+
+
 % ==================================================
 % Opérations
 % ==================================================
@@ -252,19 +266,12 @@
 % ==================================================
 % Produit scalaire
 % ==================================================
-\newcommand{\ps}[2]{\mathopen(\ifempty{#1}{\dotpourvariable}{#1}\!\mid\!\ifempty{#2}{\dotpourvariable}{#2}\mathclose)}
-\newcommand{\bigps}[2]{\bigl( #1 \!\mid\! #2 \bigr)}
-\newcommand{\Bigps}[2]{\Bigl( #1 \!\mid\! #2 \Bigr)}
-\newcommand{\biggps}[2]{\biggl( #1 \!\mid\! #2 \biggr)}
-\newcommand{\Biggps}[2]{\Bigl( #1 \!\mid\! #2 \Biggr)}
-% ==================================================
-% Produit scalaire crochet
-% ==================================================
-\newcommand{\psc}[2]{\mathopen\langle \ifempty{#1}{\dotpourvariable}{#1},\ifempty{#2}{\dotpourvariable}{#2}\mathclose\rangle}
-\newcommand{\bigpsc}[2]{\bigl\langle #1,#2 \bigr\rangle}
-\newcommand{\Bigpsc}[2]{\Bigl\langle #1,#2 \Bigr\rangle}
-\newcommand{\biggpsc}[2]{\biggl\langle #1,#2 \biggr\rangle}
-\newcommand{\Biggpsc}[2]{\Biggl\langle #1,#2 \Biggr\rangle}
+\newcommand{\ps}[2]{ \langle #1 \;,\; #2  \rangle}
+\newcommand{\bigps}[2]{\bigl \langle #1 \;,\; #2 \bigr \rangle}
+\newcommand{\Bigps}[2]{\Bigl \langle #1 \;,\; #2 \Bigr \rangle}
+\newcommand{\biggps}[2]{\biggl \langle #1 \;,\; #2 \biggr \rangle}
+\newcommand{\Biggps}[2]{\Bigl \langle #1 \;,\; #2 \Biggr \rangle}
+
 % ==================================================
 % Norme triple
 % ==================================================
@@ -568,3 +575,11 @@
  \noindent { \textcolor{Red}{\fontfamily{pzc}\selectfont \large {\LARGE\textsc{S}}olution \thesol.}}%
  \hspace{0.5em}}
 {\medskip}
+
+
+
+%%%%%%%% ENVIRONNEMENT théorèmes... %%%%%%%%%%
+\newtheorem{theorem}{Théorème}[section]
+\newtheorem{corollary}{Corollaire}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\usepackage{amsthm}
