@@ -16,11 +16,25 @@ En utilisant l'identité classique $2\ps{x}{y} = \norme{x+y}^2-\norme{x}^2-\norm
 \begin{align*}
 f(\xhat)-f(\xopt) &\leq f(x_t)-\prt{f(x_t) + \transpose{u_t}\prt{\xopt-x_t}
 + \frac{\alpha}{2} \norme{\xopt-x_t}^2}\\
-&= \transpose{u_t}\prt{x_t-\xopt}
+&= -\transpose{u_t}\prt{\xopt-x_t}
 - \frac{\alpha}{2} \norme{\xopt-x_t}^2\\
-&= \frac{\step}{\step} \cdot \transpose{u_t}\prt{x_t-\xopt}
+&= -\frac{\step}{\step} \cdot \transpose{u_t}\prt{\xopt-x_t}
 - \frac{\alpha}{2} \norme{\xopt-x_t}^2\\
-&= \frac{1}{2 \step }\prt{\norme{\step \cdot u_t+x_t-\xopt}^2-\norme{\step \cdot u_t}^2-\norme{x_t-\xopt}^2
+&= \frac{1}{2 \step }\prt{\norme{\step \cdot u_t}^2+\norme{\xopt-x_t}^2-\norme{\step \cdot u_t+\xopt-x_t}^2
 }- \frac{\alpha}{2} \norme{\xopt-x_t}^2\\
+&= \frac{1}{2 \step }\prt{\norme{\step \cdot u_t}^2+\norme{\xopt-x_t}^2-\norme{ \xopt-y_t}^2
+}- \frac{\alpha}{2} \norme{\xopt-x_t}^2\\
+&\leq  \frac{1}{2 \step }\prt{\step^2\cdot L^2+\norme{\xopt-x_t}^2-\norme{\xopt-x_{t+1}}^2
+}- \frac{\alpha}{2} \norme{\xopt-x_t}^2\\
+&= \frac{\step L^2}{2} + \underbrace{\prt{\frac{1}{2 \step } - \frac{\alpha}{2}}}_{\frac{\alpha (t-1)}{4}} \norme{\xopt-x_t}^2
+- \underbrace{\frac{1}{2 \step }}_{\frac{\alpha (t+1)}{4}} \norme{\xopt-x_{t+1}}^2
 \end{align*}
+
+En utilisant la définition de $\xhat$, la convexité de $f$ et l'inégalité d'au-dessous pour tout $t$, on a successivement:
+\begin{align*}
+  
+\end{align*}
+
+
+
 \end{proof}
