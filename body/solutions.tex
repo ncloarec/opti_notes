@@ -32,7 +32,9 @@ f(\xhat)-f(\xopt) &\leq f(x_t)-\prt{f(x_t) + \transpose{u_t}\prt{\xopt-x_t}
 
 En utilisant la définition de $\xhat$, la convexité de $f$ et l'inégalité d'au-dessous pour tout $t$, on a successivement:
 \begin{align*}
-  f(\xhat)-f(\xopt) = f\prt{\sum_{t=0}^T \frac{2t}{T(T+1)}}
+  f(\xhat)-f(\xopt) &= f\prt{\sum_{t=0}^T \frac{2t}{T(T+1)} x_t}-f(\xopt)\\
+  &\leq  \sum_{t=0}^T \frac{2t}{T(T+1)} \prt{f(x_t)-f(\xopt)}\\
+  &\leq  \sum_{t=0}^T \frac{2t}{T(T+1)} \prt{\frac{\step L^2}{2}+\frac{\alpha (t-1)}{4} \cdot \norme{\xopt-x_t}^2-\frac{\alpha (t+1)}{4} \cdot  \norme{\xopt-x_{t+1}}^2}\\
 \end{align*}
 
 
