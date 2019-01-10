@@ -84,8 +84,7 @@ En reprenant les hypothèses sur $f$ introduites au-dessus, on a le résultat su
 où $K := \frac{\beta}{\alpha}$.
    \end{theorem}
 
-\begin{proof}
-Montrons tout d'abord l'égalité suivante:
+Remarquons tout d'abord que l'on a l'égalité suivante:
 \begin{equation}
   f(\xhat)- f(\xopt) = \int_{0}^{1} \transpose{\grad f\prt{\xopt+t(\xhat-\xopt)}}
    \cdot \prt{\xhat- \xopt} \dt
@@ -96,9 +95,10 @@ En introduisant la fonction auxiliaire $\phi(t):= f\prt{\xopt+t(\xhat-\xopt)}$ d
   \phi(1)-\phi(0)= \int_0^1 \phi^{\prime}(t) \dt = \int_{0}^{1} \transpose{\grad f\prt{\xopt+t(\xhat-\xopt)}}
    \cdot \prt{\xhat- \xopt} \dt
 \end{equation*}
-ce qui montre \eqref{eq:int_form} .
+ce qui montre bien \eqref{eq:int_form} .
 
-En utilisant la forme intégrale pour $f(\xhat)- f(\xopt)$, on a donc succcessivement:
+En utilisant la forme intégrale pour $f(\xhat)- f(\xopt)$ et en appliquant le théorème
+ci dessous, on obtient donc successivement:
 \begin{align*}
 f(\xhat)- f(\xopt) &= \int_{0}^{1} \transpose{\grad f\prt{\xopt+t(\xhat-\xopt)}
 - \grad f(\xopt)}
@@ -119,7 +119,6 @@ f(\xhat)- f(\xopt) &= \int_{0}^{1} \transpose{\grad f\prt{\xopt+t(\xhat-\xopt)}
   d'une dizaine d'étages pour avoir une précision à $\varepsilon$-près.
 
 \end{itemize}
-\end{proof}
 
 \section{Exemple de fonction à la fois $\alpha$-fortement convexe et
  $\beta$ régulière}
@@ -147,4 +146,27 @@ f(\xhat)- f(\xopt) &= \int_{0}^{1} \transpose{\grad f\prt{\xopt+t(\xhat-\xopt)}
  \begin{equation*}
 \norme{\xhat - \xopt}^2 \leq \e^{-T/K}\cdot \norme{x_0-\xopt}^2
  \end{equation*}
- Si $T >> K \log \prt{\frac{1}{\varepsilon}} = \frac{\lambda_{\max}}{\lambda_{\min}}$ (condition-number)
+ Si $T >> \underbrace{K}_{= \frac{\lambda_{\max}}{\lambda_{\min}}} \log \prt{\frac{1}{\varepsilon}} $, \eg si la matrice est bien conditionné ($K$ faible),
+  alors on approche $\xopt$ très rapidement.
+
+  \begin{proof}
+    On démontre ici le théorème énoncé plus haut.
+
+    On aimerait avoir pour tout $t=1$ à $T$ :
+    \begin{equation}
+      \norme{x_t-\xopt}^2\leq \prt{1- \frac{1}{K}} \cdot \norme{x_{t-1}-\xopt}^2
+    \end{equation}
+    ce qui impliquerait par récurrence immédiate
+    \begin{equation}
+      \norme{x_T-\xopt}^2\leq \underbrace{\prt{1- \frac{1}{K}}^T}_{\e^{-T/K}}\cdot \norme{x_{0}-\xopt}^2
+    \end{equation}
+
+    On a :
+    \begin{align*}
+      \norme{x_t-\xopt}^2&= \norme{x_{t-1}-\frac{1}{\beta} \grad f(x_{t-1})-\xopt}^2\\
+      &= \norme{x_{t-1}-\xopt}^2+\underbrace{\frac{1}{\beta^2} \norme{f(x_{t-1})}^2-
+      \frac{2}{\beta}\transpose{\grad f(x_{t-1})} \cdot \prt{x_{t-1}-\xopt}}_{\leq
+      -\frac{1}{K}\norme{x_{t-1}-\xopt}^2?
+      }
+    \end{align*}
+  \end{proof}
