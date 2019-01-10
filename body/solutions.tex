@@ -67,3 +67,42 @@ Un exemple très important est celui des fonctions $\alpha$-fortement convexe et
      \item[$\beta$-régularité] $\displaystyle f(x) \leq f(x_0)+ \transpose{\grad f(x_0)}\prt{x-x_0}+ \frac{\beta}{2}\norme{x-x_0}^2$
      \item[$\alpha$-fortement convexe] $\displaystyle f(x_0)+ \transpose{\grad f(x_0)}\prt{x-x_0}+ \frac{\alpha}{2}\norme{x-x_0}^2 \leq  f(x) $
    \end{description}
+
+   Plusieurs cas :
+   \begin{itemize}
+     \item Si $\alpha=\beta$, cela signifie que $f$ est quadratique;
+     \item si $\alpha \neq \beta$, alors nécessairement $\alpha \leq \beta$.
+     \item Si $\alpha \approx \beta$, alors on peut confondre la courbe de $f$ et
+     la courbe de $\beta$ et on peut alors trouver le minimum très facilement.
+   \end{itemize}
+
+   \begin{theorem}
+En reprenant les hypothèses sur $f$ introduites au-dessus, on a le résultat suivant
+\begin{equation}
+\norme{\xhat - \xopt}^2 \leq \e^{-\frac{T}{K} \cdot \norme{x_0-\xopt}}
+\end{equation}
+où $K := \frac{\beta}{\alpha}$.
+   \end{theorem}
+
+\begin{proof}
+Montrons tout d'abord l'égalité suivante:
+\begin{equation}
+  f(\xhat)- f(\xopt) = \int_{0}^{1} \transpose{\grad f\prt{\xopt+t(\xhat-\xopt)}}
+   \cdot \prt{\xhat- \xopt} \dt
+\end{equation}
+
+En introduisant la fonction auxiliaire $\phi(t):= f\prt{\xopt+t(\xhat-\xopt)}$ définie sur $\intff{0}{1}$, on a :
+\begin{equation*}\label{eq:int_form}
+  \phi(1)-\phi(0)= \int_0^1 \phi^{\prime}(t) \dt = \int_{0}^{1} \transpose{\grad f\prt{\xopt+t(\xhat-\xopt)}}
+   \cdot \prt{\xhat- \xopt} \dt
+\end{equation*}
+ce qui montre \eqref{eq:int_form} .
+
+En utilisant la forme intégrale pour $f(\xhat)- f(\xopt)$, on a donc succcessivement:
+\begin{align*}
+f(\xhat)- f(\xopt) &= \int_{0}^{1} \transpose{\grad f\prt{\xopt+t(\xhat-\xopt)}}
+ \cdot \prt{\xhat- \xopt} \dt\\
+ &\leq \int_{0}^{1} \norme{\grad f\prt{\xopt+t(\xhat-\xopt)}}
+  \cdot \norme{\xhat- \xopt} \dt
+\end{align*}
+\end{proof}
