@@ -35,8 +35,35 @@ En utilisant la définition de $\xhat$, la convexité de $f$ et l'inégalité d'
   f(\xhat)-f(\xopt) &= f\prt{\sum_{t=0}^T \frac{2t}{T(T+1)} x_t}-f(\xopt)\\
   &\leq  \sum_{t=0}^T \frac{2t}{T(T+1)} \prt{f(x_t)-f(\xopt)}\\
   &\leq  \sum_{t=0}^T \frac{2t}{T(T+1)} \prt{\frac{\step L^2}{2}+\frac{\alpha (t-1)}{4} \cdot \norme{\xopt-x_t}^2-\frac{\alpha (t+1)}{4} \cdot  \norme{\xopt-x_{t+1}}^2}\\
+  &\leq  \underbrace{\sum_{t=0}^T \frac{t}{T(T+1)} \step L^2}_{:=A}+\underbrace{\sum_{t=0}^T \frac{\alpha t}{2T(T+1)}  \prt{(t-1) \cdot \norme{\xopt-x_t}^2-(t+1) \cdot  \norme{\xopt-x_{t+1}}^2}}_{:=B}\\
 \end{align*}
 
+En posant $\delta_t := t(t-1) \cdot \norme{\xopt-x_t}^2$, on peut réécrire la somme
+ de gauche:
+\begin{equation*}
+B= \frac{\alpha}{2T(T+1)} \sum_{t=0}^T \prt{\delta_t-\delta_{t+1}}
+=\frac{\alpha}{2T(T+1)} \prt{\delta_1-\delta_{T+1}}
+\leq 0
+\end{equation*}
 
-
+Montrons maintenant que $A \leq \frac{2 L^2}{\alpha T}$. En utilisant la définition
+ du pas $\mu_t$, on a:
+ \begin{equation*}
+   A= \frac{L^2}{T(T+1)} \sum_{t=0}^T \frac{2t}{\alpha (t+1)}
+   = \frac{2L^2}{\alpha T} \cdot  \frac{1}{(T+1)}\sum_{t=0}^T \underbrace{\frac{t}{t+1}}_{\leq 1} \leq \frac{2L^2}{\alpha T}
+ \end{equation*}
+d'où le résultat.
 \end{proof}
+
+Un exemple très important est celui des fonctions $\alpha$-fortement convexe et
+ $\beta$ régulière. Remarquons que nécessairement $\alpha \leq \beta$.
+
+ \section{Cas de fonctions $\alpha$-fortement convexe et
+  $\beta$ régulière}
+
+  Soit $f: \R^d \mapsto \R$ une fonction $\alpha$-fortement convexe et
+   $\beta$ régulière. On a donc pour tout $x, x_0$ appartenant à $\R^d$:
+   \begin{description}
+     \item[$\beta$-régularité] $\displaystyle f(x) \leq f(x_0)+ \transpose{\grad f(x_0)}\prt{x-x_0}+ \frac{\beta}{2}\norme{x-x_0}^2$
+     \item[$\alpha$-fortement convexe] $\displaystyle f(x_0)+ \transpose{\grad f(x_0)}\prt{x-x_0}+ \frac{\alpha}{2}\norme{x-x_0}^2 \leq  f(x) $
+   \end{description}
