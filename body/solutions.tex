@@ -169,4 +169,26 @@ f(\xhat)- f(\xopt) &= \int_{0}^{1} \transpose{\grad f\prt{\xopt+t(\xhat-\xopt)}
       -\frac{1}{K}\norme{x_{t-1}-\xopt}^2?
       }
     \end{align*}
+
+    Introduisons le lemme suivant :
+    \begin{lemma}
+      \begin{equation}
+        \forall x, y \in \R^d \quad f\prt{x-\frac{1}{\beta} \grad f(x)} - f(y)
+        \leq \transpose{\grad f(x)} (x-y)-\frac{1}{2 \beta } \norme{f(x)}^2
+        - \frac{\alpha}{2} \norme{x-y}^2
+      \end{equation}
+    \end{lemma}
+
+    En supposant admis le lemme et en l'appliquant à $x = x_{t-1}$ et $y = \xopt$,
+    on a :
+    \begin{align*}
+0 &\leq \transpose{\grad f(x_{t-1})}\prt{x_{t-1}-\xopt}
+-\frac{1}{2 \beta} \norme{\grad f(x_{t-1})}^2 - \frac{\alpha}{2} \norme{x_{t-1}-\xopt}^2\\
+&\implies \frac{1}{2\beta } \norme{\grad f(x_{t-1})}^2-\transpose{\grad f(x_{t-1})}\prt{x_{t-1}-\xopt} \leq - \frac{\alpha}{2} \norme{x_{t-1}-\xopt}^2
+    \end{align*}
+Il suffit alors de multiplier chaque côté par $\frac{2}{\beta}$ pour avoir l'inégalité désirée.
+
+Il ne reste plus qu'à démontrer le lemme, qui se montrer aisément en introduisant $x$
+artificiellement :
+
   \end{proof}
