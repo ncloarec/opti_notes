@@ -100,9 +100,51 @@ ce qui montre \eqref{eq:int_form} .
 
 En utilisant la forme intégrale pour $f(\xhat)- f(\xopt)$, on a donc succcessivement:
 \begin{align*}
-f(\xhat)- f(\xopt) &= \int_{0}^{1} \transpose{\grad f\prt{\xopt+t(\xhat-\xopt)}}
+f(\xhat)- f(\xopt) &= \int_{0}^{1} \transpose{\grad f\prt{\xopt+t(\xhat-\xopt)}
+- \grad f(\xopt)}
  \cdot \prt{\xhat- \xopt} \dt\\
- &\leq \int_{0}^{1} \norme{\grad f\prt{\xopt+t(\xhat-\xopt)}}
-  \cdot \norme{\xhat- \xopt} \dt
+ &\leq \int_{0}^{1} \norme{\grad f\prt{\xopt+t(\xhat-\xopt)} - \grad f(\xopt)}
+  \cdot \norme{\xhat- \xopt} \dt\\
+ &\leq \int_{0}^{1} \beta \norme{t(\xhat-\xopt)}
+  \cdot \norme{\xhat- \xopt} \dt\\
+ &= \beta \norme{\xhat- \xopt}^2 \cdot \int_{0}^{1} t  \dt\\
+ &= \frac{ \beta \norme{\xhat- \xopt}^2}{2} \\
+ &\leq \frac{\beta}{2} \e^{-T/K} \cdot \norme{x_0-\xopt}
 \end{align*}
+
+\textit{Remarque à propos de la complexité de cet alogrithme}:
+\begin{itemize}
+  \item il faut que l'on ne parte pas trop loin de $\xopt$ à cause de la dépendance au terme $\norme{x_0-\xopt}$.
+  \item La complexité est en $\log(\frac{1}{\varepsilon})$ ce qui est très rapide. Si $\varepsilon \sim 10^{-9}$, $\log(\frac{1}{\varepsilon}) \sim 9$ on l'on a besoin de seulement
+  d'une dizaine d'étages pour avoir une précision à $\varepsilon$-près.
+
+\end{itemize}
 \end{proof}
+
+\section{Exemple de fonction à la fois $\alpha$-fortement convexe et
+ $\beta$ régulière}
+
+ II suffit de prendre n'importe quelle fonction quadratique (non nulle).
+
+ Si $A \in S_d^{++}$, $b \in \R^d$ et $f: \R^d \rightarrow \R, \; x \mapsto \frac{1}{2} \transpose{x}Ax-\transpose{b}x$.
+ Alors on a $f$ qui est :
+ \begin{itemize}
+   \item $\lambda_{\min}\prt{A}$-fortement convexe,
+   \item $\lambda_{\max}\prt{A}$-régulière.
+ \end{itemize}
+
+ En effet, on a $f \in \mathcal{L}^2$ et $ \forall x \in \R^d, \; \grad^{\,2}f(x) = A$,
+ d'où l'on a bien
+ \begin{equation*}
+   \forall x \in \R^d, \quad \lambda_{\min} I_d \preceq  \grad^{\,2}f(x) \preceq
+   \lambda_{\max} I_d
+ \end{equation*}
+ En $10$ étages, on peut trouver une solution à l'équation $Ax= b$ à $\varepsilon$
+ près, tandis que résoudre cette équation directement donne une complexité très importante.
+
+ En effet, $f$ est minimale en $\grad f(x) = Ax-b = 0 \Leftrightarrow x=A^{-1}b$.
+ En appliquant l'algorithme de descente de gradient, on trouve $\xhat \in \R^d$ tel que
+ \begin{equation*}
+\norme{\xhat - \xopt}^2 \leq \e^{-T/K}\cdot \norme{x_0-\xopt}^2
+ \end{equation*}
+ Si $T >> K \log \prt{\frac{1}{\varepsilon}} = \frac{\lambda_{\max}}{\lambda_{\min}}$ (condition-number)

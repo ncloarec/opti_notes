@@ -5,3 +5,4 @@
 
 # A faire
 - graphe mini-page 5
+- comprendre d'où vient le -grad de f(\xstar) dans le passage avec l'int de 0 à 1
