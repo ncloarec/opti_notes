@@ -1,42 +1,33 @@
 \documentclass[11pt]{article}
-\PassOptionsToPackage{dvipsnames,svgnames}{xcolor}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
 \usepackage{amsmath,amssymb,amsthm,epsfig,stmaryrd,bbm,mathrsfs,stmaryrd}
 \usepackage{mathtools}
-\usepackage{fancyhdr}
-\usepackage{titlesec,comment}
-\usepackage{mesMacros}
-\usepackage{multicol}
-\usepackage{upgreek}
-\usepackage{enumitem}
-\usepackage{tikz}
-\usetikzlibrary{decorations.pathreplacing}
-\usetikzlibrary{calc}
-\usepackage{float}
-\usepackage{pifont}
-\usepackage{bbm}
 
-\renewcommand\theequation{{\color{electriccrimson}\arabic{equation}}}
-
-
-
+%%%%% MACROS %%%%%%
+\DeclareMathOperator*{\argmin}{arg\,min} % Jan Hlavacek
+\newcommand{\transpose}[1]{\ensuremath{#1^{\scriptscriptstyle T}}}
+\newcommand{\dotpourvariable}{\:\cdot\:}
+\newcommand{\ifempty}[3]{\ifx\hfuzz#1\hfuzz #2 \else #3\fi}
+\newcommand{\norme}[1]{\left\lVert\ifempty{#1}{\dotpourvariable}{#1}\right\rVert}
+\newcommand{\prt}[1]{\left( \, #1  \, \right)}
+\newcommand{\ps}[2]{ \langle #1 \;,\; #2  \rangle}
+\newcommand{\R}{\mathbb{R}} % Probleme LateXML
+\newcommand*{\e}{\ensuremath{\mathrm{e}}}
+\def\dt{\d{}t}
+\newcommand{\intervalle}[4]{\mathopen{#1}#2\mathpunct{};#3\mathclose{#4}}
+\newcommand{\intff}[2]{\intervalle{[}{#1}{#2}{]}}
+\def\eg{\textsl{eg}\xspace}
 
 
+%%%%%%%% ENVIRONNEMENT théorèmes... %%%%%%%%%%
+\newtheorem{theorem}{Théorème}[section]
+\newtheorem{corollary}{Corollaire}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\usepackage{amsthm}
 
-\usepackage[top=0.5cm,left=2cm,right=2cm,bottom=1cm]{geometry}
 
-% Colors
-%--------------------------------------------------------------------------
-\RequirePackage{xcolor}
-\definecolor{ggyellow}{RGB}{255,185,88}
-\definecolor{ggred}{RGB}{219,68,55}
-\definecolor{ggblue}{RGB}{66,133,244}
-\definecolor{ggyellow}{RGB}{244,160,0}
-\definecolor{gggreen}{RGB}{15,157,88}
-\definecolor{darkgreen}{RGB}{0,100,0}
-\definecolor{myorange}{RGB}{240,84,8}
 %%%%%%%%%%% FONTE %%%%%%%%%%%%%%%%%
 \usepackage[fulloldstyle]{kpfonts}
 
@@ -46,35 +37,212 @@
 
 \fontfamily{pzc} \selectfont
 
-\shorthandoff{:!}
-\begin{tikzpicture}[every node/.style={inner sep=0pt}]
- \node[text width= \linewidth-3.3cm](Text){%
- ~
- \bigskip\\
- {\LARGE Victor-Emmanuel Brunel}  \hfill {\large  Sigalla \& Cloarec} \\
- ~ \bigskip \\
- \centerline{\LARGE \normalfont Notes optimisation avancée}
- } ;
- \node[shift={(-1cm,0.2cm)},anchor=north west](CNW)  at (Text.north west)
- {\pgfornament[width=1cm]{61}};
- \node[shift={(1cm,0.2cm)},anchor=north east](CNE)   at (Text.north east)
- {\pgfornament[width=1cm,symmetry=v]{61}};
- \node[shift={(-1cm,-0.5cm)},anchor=south west](CSW) at (Text.south west)
- {\pgfornament[width=1cm,symmetry=h]{61}};
- \node[shift={(1cm,-0.5cm)},anchor=south east](CSE)  at (Text.south east)
- {\pgfornament[width=1cm,symmetry=c]{61}};
- \node[shift={(0cm,0cm)}](CS) at (Text.south)
- {\pgfornament[width=4.5cm,ydelta=+3cm]{75}};
- \pgfornamenthline{CNW}{CNE}{north}{89}
- \pgfornamentvline{CNW}{CSW}{west}{87}
- \pgfornamentvline{CNE}{CSE}{east}{87}
-\end{tikzpicture}
-\shorthandoff{:!}
-\fontfamily{ptm} \selectfont
-\normalfont
 
+\begin{theorem}
 
-\input{body/solutions}
+Soit $f$ une fonction réelle $\alpha$-fortement convexe et $L$-lipschitzienne sur
+$E$. Soit $x^{*}:= \argmin_{x\in E} f(x)$. On a le résultat suivant:
+\begin{equation}
+f(\hat{x})-f(x^{*}) \leq \frac{2 L^2}{\alpha T}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Pour $t=1$ à $T$, introduisons le pas:
+\begin{equation}
+  \eta_t := \frac{2}{\alpha t}
+\end{equation}
+En utilisant l'identité classique $2\ps{x}{y} = \norme{x+y}^2-\norme{x}^2-\norme{y}^2$, on a pour $t=0$ à $T-1$:
+\begin{align*}
+f(\hat{x})-f(x^{*}) &\leq f(x_t)-\prt{f(x_t) + \transpose{u_t}\prt{x^{*}-x_t}
++ \frac{\alpha}{2} \norme{x^{*}-x_t}^2}\\
+&= -\transpose{u_t}\prt{x^{*}-x_t}
+- \frac{\alpha}{2} \norme{x^{*}-x_t}^2\\
+&= -\frac{\eta_{t+1}}{\eta_{t+1}} \cdot \transpose{u_t}\prt{x^{*}-x_t}
+- \frac{\alpha}{2} \norme{x^{*}-x_t}^2\\
+&= \frac{1}{2 \eta_{t+1} }\prt{\norme{\eta_{t+1} \cdot u_t}^2+\norme{x^{*}-x_t}^2-\norme{\eta_{t+1} \cdot u_t+x^{*}-x_t}^2
+}- \frac{\alpha}{2} \norme{x^{*}-x_t}^2\\
+&= \frac{1}{2 \eta_{t+1} }\prt{\norme{\eta_{t+1} \cdot u_t}^2+\norme{x^{*}-x_t}^2-\norme{ x^{*}-y_t}^2
+}- \frac{\alpha}{2} \norme{x^{*}-x_t}^2\\
+&\leq  \frac{1}{2 \eta_{t+1} }\prt{\eta_{t+1}^2\cdot L^2+\norme{x^{*}-x_t}^2-\norme{x^{*}-x_{t+1}}^2
+}- \frac{\alpha}{2} \norme{x^{*}-x_t}^2\\
+&= \frac{\eta_{t+1} L^2}{2} + \underbrace{\prt{\frac{1}{2 \eta_{t+1} } - \frac{\alpha}{2}}}_{\frac{\alpha (t-1)}{4}} \norme{x^{*}-x_t}^2
+- \underbrace{\frac{1}{2 \eta_{t+1} }}_{\frac{\alpha (t+1)}{4}} \norme{x^{*}-x_{t+1}}^2
+\end{align*}
+
+En utilisant la définition de $\hat{x}$, la convexité de $f$ et l'inégalité d'au-dessous pour tout $t$, on a successivement:
+\begin{align*}
+  f(\hat{x})-f(x^{*}) &= f\prt{\sum_{t=0}^T \frac{2t}{T(T+1)} x_t}-f(x^{*})\\
+  &\leq  \sum_{t=0}^T \frac{2t}{T(T+1)} \prt{f(x_t)-f(x^{*})}\\
+  &\leq  \sum_{t=0}^T \frac{2t}{T(T+1)} \prt{\frac{\eta_{t+1} L^2}{2}+\frac{\alpha (t-1)}{4} \cdot \norme{x^{*}-x_t}^2-\frac{\alpha (t+1)}{4} \cdot  \norme{x^{*}-x_{t+1}}^2}\\
+  &\leq  \underbrace{\sum_{t=0}^T \frac{t}{T(T+1)} \eta_{t+1} L^2}_{:=A}+\underbrace{\sum_{t=0}^T \frac{\alpha t}{2T(T+1)}  \prt{(t-1) \cdot \norme{x^{*}-x_t}^2-(t+1) \cdot  \norme{x^{*}-x_{t+1}}^2}}_{:=B}\\
+\end{align*}
+
+En posant $\delta_t := t(t-1) \cdot \norme{x^{*}-x_t}^2$, on peut réécrire la somme
+ de gauche:
+\begin{equation*}
+B= \frac{\alpha}{2T(T+1)} \sum_{t=0}^T \prt{\delta_t-\delta_{t+1}}
+=\frac{\alpha}{2T(T+1)} \prt{\delta_1-\delta_{T+1}}
+\leq 0
+\end{equation*}
+
+Montrons maintenant que $A \leq \frac{2 L^2}{\alpha T}$. En utilisant la définition
+ du pas $\eta_t$, on a:
+ \begin{equation*}
+   A= \frac{L^2}{T(T+1)} \sum_{t=0}^T \frac{2t}{\alpha (t+1)}
+   = \frac{2L^2}{\alpha T} \cdot  \frac{1}{(T+1)}\sum_{t=0}^T \underbrace{\frac{t}{t+1}}_{\leq 1} \leq \frac{2L^2}{\alpha T}
+ \end{equation*}
+d'où le résultat.
+\end{proof}
+
+Un exemple très important est celui des fonctions $\alpha$-fortement convexe et
+ $\beta$ régulière. Remarquons que nécessairement $\alpha \leq \beta$.
+
+ \section{Cas de fonctions $\alpha$-fortement convexe et
+  $\beta$ régulière}
+
+  Soit $f: \R^d \mapsto \R$ une fonction $\alpha$-fortement convexe et
+   $\beta$ régulière. On a donc pour tout $x, x_0$ appartenant à $\R^d$:
+   \begin{description}
+     \item[$\beta$-régularité] $\displaystyle f(x) \leq f(x_0)+ \transpose{\nabla\! f(x_0)}\prt{x-x_0}+ \frac{\beta}{2}\norme{x-x_0}^2$
+     \item[$\alpha$-fortement convexe] $\displaystyle f(x_0)+ \transpose{\nabla\! f(x_0)}\prt{x-x_0}+ \frac{\alpha}{2}\norme{x-x_0}^2 \leq  f(x) $
+   \end{description}
+
+   Plusieurs cas :
+   \begin{itemize}
+     \item Si $\alpha=\beta$, cela signifie que $f$ est quadratique;
+     \item si $\alpha \neq \beta$, alors nécessairement $\alpha \leq \beta$.
+     \item Si $\alpha \approx \beta$, alors on peut confondre la courbe de $f$ et
+     la courbe de $\beta$ et on peut alors trouver le minimum très facilement.
+   \end{itemize}
+
+   \begin{theorem}
+En reprenant les hypothèses sur $f$ introduites au-dessus, on a le résultat suivant
+\begin{equation}
+\norme{\hat{x} - x^{*}}^2 \leq \e^{-\frac{T}{K} \cdot \norme{x_0-x^{*}}}
+\end{equation}
+où $K := \frac{\beta}{\alpha}$.
+   \end{theorem}
+
+Remarquons tout d'abord que l'on a l'égalité suivante:
+\begin{equation}
+  f(\hat{x})- f(x^{*}) = \int_{0}^{1} \transpose{\nabla\! f\prt{x^{*}+t(\hat{x}-x^{*})}}
+   \cdot \prt{\hat{x}- x^{*}} \dt
+\end{equation}
+
+En introduisant la fonction auxiliaire $\phi(t):= f\prt{x^{*}+t(\hat{x}-x^{*})}$ définie sur $\intff{0}{1}$, on a :
+\begin{equation*}\label{eq:int_form}
+  \phi(1)-\phi(0)= \int_0^1 \phi^{\prime}(t) \dt = \int_{0}^{1} \transpose{\nabla\! f\prt{x^{*}+t(\hat{x}-x^{*})}}
+   \cdot \prt{\hat{x}- x^{*}} \dt
+\end{equation*}
+ce qui montre bien \eqref{eq:int_form} .
+
+En utilisant la forme intégrale pour $f(\hat{x})- f(x^{*})$ et en appliquant le théorème
+ci dessous, on obtient donc successivement:
+\begin{align*}
+f(\hat{x})- f(x^{*}) &= \int_{0}^{1} \transpose{\nabla\! f\prt{x^{*}+t(\hat{x}-x^{*})}
+- \nabla\! f(x^{*})}
+ \cdot \prt{\hat{x}- x^{*}} \dt\\
+ &\leq \int_{0}^{1} \norme{\nabla\! f\prt{x^{*}+t(\hat{x}-x^{*})} - \nabla\! f(x^{*})}
+  \cdot \norme{\hat{x}- x^{*}} \dt\\
+ &\leq \int_{0}^{1} \beta \norme{t(\hat{x}-x^{*})}
+  \cdot \norme{\hat{x}- x^{*}} \dt\\
+ &= \beta \norme{\hat{x}- x^{*}}^2 \cdot \int_{0}^{1} t  \dt\\
+ &= \frac{ \beta \norme{\hat{x}- x^{*}}^2}{2} \\
+ &\leq \frac{\beta}{2} \e^{-T/K} \cdot \norme{x_0-x^{*}}
+\end{align*}
+
+\textit{Remarque à propos de la complexité de cet alogrithme}:
+\begin{itemize}
+  \item il faut que l'on ne parte pas trop loin de $x^{*}$ à cause de la dépendance au terme $\norme{x_0-x^{*}}$.
+  \item La complexité est en $\log(\frac{1}{\varepsilon})$ ce qui est très rapide. Si $\varepsilon \sim 10^{-9}$, $\log(\frac{1}{\varepsilon}) \sim 9$ on l'on a besoin de seulement
+  d'une dizaine d'étages pour avoir une précision à $\varepsilon$-près.
+
+\end{itemize}
+
+\section{Exemple de fonction à la fois $\alpha$-fortement convexe et
+ $\beta$ régulière}
+
+ II suffit de prendre n'importe quelle fonction quadratique (non nulle).
+
+ Si $A \in S_d^{++}$, $b \in \R^d$ et $f: \R^d \rightarrow \R, \; x \mapsto \frac{1}{2} \transpose{x}Ax-\transpose{b}x$.
+ Alors on a $f$ qui est :
+ \begin{itemize}
+   \item $\lambda_{\min}\prt{A}$-fortement convexe,
+   \item $\lambda_{\max}\prt{A}$-régulière.
+ \end{itemize}
+
+ En effet, on a $f \in \mathcal{L}^2$ et $ \forall x \in \R^d, \; \nabla\!^{\,2}f(x) = A$,
+ d'où l'on a bien
+ \begin{equation*}
+   \forall x \in \R^d, \quad \lambda_{\min} I_d \preceq  \nabla\!^{\,2}f(x) \preceq
+   \lambda_{\max} I_d
+ \end{equation*}
+ En $10$ étages, on peut trouver une solution à l'équation $Ax= b$ à $\varepsilon$
+ près, tandis que résoudre cette équation directement donne une complexité très importante.
+
+ En effet, $f$ est minimale en $\nabla\! f(x) = Ax-b = 0 \Leftrightarrow x=A^{-1}b$.
+ En appliquant l'algorithme de descente de nabla\!ient, on trouve $\hat{x} \in \R^d$ tel que
+ \begin{equation*}
+\norme{\hat{x} - x^{*}}^2 \leq \e^{-T/K}\cdot \norme{x_0-x^{*}}^2
+ \end{equation*}
+ Si $T >> \underbrace{K}_{= \frac{\lambda_{\max}}{\lambda_{\min}}} \log \prt{\frac{1}{\varepsilon}} $, \eg si la matrice est bien conditionné ($K$ faible),
+  alors on approche $x^{*}$ très rapidement.
+
+  \begin{proof}
+    On démontre ici le théorème énoncé plus haut.
+
+    On aimerait avoir pour tout $t=1$ à $T$ :
+    \begin{equation}
+      \norme{x_t-x^{*}}^2\leq \prt{1- \frac{1}{K}} \cdot \norme{x_{t-1}-x^{*}}^2
+    \end{equation}
+    ce qui impliquerait par récurrence immédiate
+    \begin{equation}
+      \norme{x_T-x^{*}}^2\leq \underbrace{\prt{1- \frac{1}{K}}^T}_{\e^{-T/K}}\cdot \norme{x_{0}-x^{*}}^2
+    \end{equation}
+
+    On a :
+    \begin{align*}
+      \norme{x_t-x^{*}}^2&= \norme{x_{t-1}-\frac{1}{\beta} \nabla\! f(x_{t-1})-x^{*}}^2\\
+      &= \norme{x_{t-1}-x^{*}}^2+\underbrace{\frac{1}{\beta^2} \norme{f(x_{t-1})}^2-
+      \frac{2}{\beta}\transpose{\nabla\! f(x_{t-1})} \cdot \prt{x_{t-1}-x^{*}}}_{\leq
+      -\frac{1}{K}\norme{x_{t-1}-x^{*}}^2?
+      }
+    \end{align*}
+
+    Introduisons le lemme suivant :
+    \begin{lemma}
+      \begin{equation}
+        \forall x, y \in \R^d \quad f\prt{x-\frac{1}{\beta} \nabla\! f(x)} - f(y)
+        \leq \transpose{\nabla\! f(x)} (x-y)-\frac{1}{2 \beta } \norme{f(x)}^2
+        - \frac{\alpha}{2} \norme{x-y}^2
+      \end{equation}
+    \end{lemma}
+
+    En supposant admis le lemme et en l'appliquant à $x = x_{t-1}$ et $y = x^{*}$,
+    on a :
+    \begin{align*}
+0 &\leq \transpose{\nabla\! f(x_{t-1})}\prt{x_{t-1}-x^{*}}
+-\frac{1}{2 \beta} \norme{\nabla\! f(x_{t-1})}^2 - \frac{\alpha}{2} \norme{x_{t-1}-x^{*}}^2\\
+&\implies \frac{1}{2\beta } \norme{\nabla\! f(x_{t-1})}^2-\transpose{\nabla\! f(x_{t-1})}\prt{x_{t-1}-x^{*}} \leq - \frac{\alpha}{2} \norme{x_{t-1}-x^{*}}^2
+    \end{align*}
+Il suffit alors de multiplier chaque côté par $\frac{2}{\beta}$ pour avoir l'inégalité désirée.
+
+Il ne reste plus qu'à démontrer le lemme, qui se montrer aisément en introduisant $x$
+artificiellement :
+\begin{align*}
+  f(x^{*})-f(y)&= \underbrace{f(x^{*})-f(x)}_{:=A}+
+  \underbrace{f(x)-f(y)}_{:=B}\\
+  \end{align*}
+  avec
+  \begin{align*}
+    A &\leq \transpose{\nabla\! f(x)}(x^+-x)+ \frac{\beta}{2} \norme{x^+-x}^2\\
+    B &\leq \transpose{\nabla\! f(x)}(x-y)-\frac{\alpha}{2} \cdot \norme{x-y}^2
+  \end{align*}
+  puis il suffit d'écrire et de remplacer $x^+$ par sa formule.
+
+  \end{proof}
+
 
 
 \end{document}
