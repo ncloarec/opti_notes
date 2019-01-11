@@ -6,3 +6,5 @@
 # A faire
 - graphe mini-page 5
 - comprendre d'où vient le -grad de f(\xstar) dans le passage avec l'int de 0 à 1
+- c'est quoi le x^+ à la fin
+- compléter la fin de la dernière preuve
