@@ -195,9 +195,10 @@ artificiellement :
   \underbrace{f(x)-f(y)}_{B}\\
   \end{align*}
   avec
-  \begin{equation*}
-    A &\leq \transpose{\grad f(x)}(\transpose{x}-x)+ \frac{\beta}{2} \norme{\xopt-x}^2\\
-    B &\leq \transpose{\grad f(x)}(\transpose{x}-x)
-  \end{equation*}
+  \begin{align*}
+    A &\leq \transpose{\grad f(x)}(x^+-x)+ \frac{\beta}{2} \norme{x^+-x}^2\\
+    B &\leq \transpose{\grad f(x)}(x-y)-\frac{\alpha}{2} \cdot \norme{x-y}^2
+  \end{align*}
+  puis il suffit d'écrire et de remplacer $x^+$ par sa formule.
 
   \end{proof}
