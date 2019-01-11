@@ -2,8 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,amsthm,epsfig,stmaryrd,bbm,mathrsfs,stmaryrd}
-\usepackage{mathtools}
+\usepackage{amsmath,amsthm}
 
 %%%%% MACROS %%%%%%
 \DeclareMathOperator*{\argmin}{arg\,min} % Jan Hlavacek
@@ -25,18 +24,12 @@
 \newtheorem{theorem}{Théorème}[section]
 \newtheorem{corollary}{Corollaire}[theorem]
 \newtheorem{lemma}[theorem]{Lemma}
-\usepackage{amsthm}
 
 
 %%%%%%%%%%% FONTE %%%%%%%%%%%%%%%%%
 \usepackage[fulloldstyle]{kpfonts}
 
 \begin{document}
-\pagestyle{empty}
-\vspace {-3cm}
-
-\fontfamily{pzc} \selectfont
-
 
 \begin{theorem}
 
@@ -182,7 +175,7 @@ f(\hat{x})- f(x^{*}) &= \int_{0}^{1} \transpose{\nabla\! f\prt{x^{*}+t(\hat{x}-x
  près, tandis que résoudre cette équation directement donne une complexité très importante.
 
  En effet, $f$ est minimale en $\nabla\! f(x) = Ax-b = 0 \Leftrightarrow x=A^{-1}b$.
- En appliquant l'algorithme de descente de nabla\!ient, on trouve $\hat{x} \in \R^d$ tel que
+ En appliquant l'algorithme de descente de gradient, on trouve $\hat{x} \in \R^d$ tel que
  \begin{equation*}
 \norme{\hat{x} - x^{*}}^2 \leq \e^{-T/K}\cdot \norme{x_0-x^{*}}^2
  \end{equation*}
